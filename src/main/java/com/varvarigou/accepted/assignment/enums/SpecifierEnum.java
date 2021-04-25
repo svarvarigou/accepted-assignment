@@ -25,4 +25,8 @@ public enum SpecifierEnum {
     public static SpecifierEnum valueOfLabel(String type) {
         return BY_LABEL.get(type);
     }
+
+    public String getType() {
+        return type;
+    }
 }

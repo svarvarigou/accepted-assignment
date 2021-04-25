@@ -1,7 +1,7 @@
 package com.varvarigou.accepted.assignment.models.jpa;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.varvarigou.accepted.assignment.enums.SpecifierEnum;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -12,30 +12,39 @@ import java.io.Serializable;
 @Table(name = "match_odds",
         indexes = {
                 @Index(name = "IDX_SPECIFIER", columnList = "specifier")
-        }
+        },
+        uniqueConstraints={@UniqueConstraint(columnNames = {"match_id" , "specifier"})}
 )
 @Entity
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @ToString
 public class MatchOdds implements Serializable {
+
+    public MatchOdds(Long id, SpecifierEnum specifierValue, Double odd) {
+        this.id = id;
+        this.specifierValue = specifierValue;
+        this.specifier = this.specifierValue.getType();
+        this.odd = odd;
+    }
 
     @Id
     @GeneratedValue
     @Column(name = "id")
     private Long id;
 
-/*    @Column(name = "match_id",  insertable=false, updatable=false)
-    private Long match_id;*/
 
-    @Column(name="specifier", length = 1, nullable = false)
-    @Enumerated(EnumType.STRING)
-    private SpecifierEnum specifier;
+    @Column(name = "specifier", nullable = false)
+    private String specifier;
+
+    @JsonIgnore
+    @Transient
+    private SpecifierEnum specifierValue;
 
     @Column(name="odd", nullable = false)
     private Double odd;
 
-    @ManyToOne(optional = false)
+    @JsonIgnore
+    @ManyToOne
     private Match match;
 }

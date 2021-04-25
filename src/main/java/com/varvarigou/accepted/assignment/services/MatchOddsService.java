@@ -1,5 +1,6 @@
 package com.varvarigou.accepted.assignment.services;
 
+import com.varvarigou.accepted.assignment.models.jpa.Match;
 import com.varvarigou.accepted.assignment.models.jpa.MatchOdds;
 import com.varvarigou.accepted.assignment.repositories.MatchOddsRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -18,22 +19,30 @@ public class MatchOddsService {
 
     @Autowired
     public MatchOddsService(MatchOddsRepository matchOddsRepo) {
-        this.matchOddsRepository = matchOddsRepo;
+        matchOddsRepository = matchOddsRepo;
     }
 
     public MatchOdds saveMatchOdds(MatchOdds matchOdds){
-        return this.matchOddsRepository.save(matchOdds);
+        return matchOddsRepository.save(matchOdds);
     }
 
     public void deleteMatchOdds(Long id) {
-        this.matchOddsRepository.deleteById(id);
+        matchOddsRepository.deleteById(id);
     }
 
     public Optional<MatchOdds> getMatchOdds(Long id) {
-        return this.matchOddsRepository.findById(id);
+        return matchOddsRepository.findById(id);
     }
 
-    public Iterable<MatchOdds> getAllMatches(){
-        return this.matchOddsRepository.findAll();
+    public Iterable<MatchOdds> getAllMatchOdds(){
+        return matchOddsRepository.findAll();
+    }
+
+    public Iterable<MatchOdds> getMatchOddsByMatch(Match match){
+        return matchOddsRepository.findMatchOddsByMatch(match);
+    }
+
+    public Boolean exists(Long id){
+        return matchOddsRepository.existsById(id);
     }
 }

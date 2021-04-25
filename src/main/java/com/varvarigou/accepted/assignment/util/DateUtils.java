@@ -1,11 +1,14 @@
 package com.varvarigou.accepted.assignment.util;
 
+import lombok.NoArgsConstructor;
+
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Date;
 
+@NoArgsConstructor
 public class DateUtils {
     public static LocalTime convertToLocalTime(Date date){
         return date.toInstant().atZone(ZoneId.systemDefault()).toLocalTime();

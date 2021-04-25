@@ -6,11 +6,11 @@ import com.varvarigou.accepted.assignment.models.jpa.Match;
 import com.varvarigou.accepted.assignment.services.MatchService;
 import com.varvarigou.accepted.assignment.util.mappers.MatchMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.IterableUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.apache.commons.collections4.IterableUtils;
 
 import java.util.Optional;
 
@@ -31,7 +31,7 @@ public class MatchWeb {
     public ResponseEntity<?> getMatch(@PathVariable(required = false) Long id, @RequestParam(required = false) SportsEnum sport){
 
         if(id != null){
-            log.debug("quering match with id : ",id);
+            log.debug("quering match with id : {}",id);
             Optional<Match> matchOptional = matchService.getMatch(id);
 
             if(matchOptional.isEmpty()){
@@ -52,7 +52,7 @@ public class MatchWeb {
 
     @PostMapping("match")
     public ResponseEntity<Void> insertMatch(@RequestBody MatchDTO matchDTO){
-        log.debug("received DTO ",matchDTO);
+        log.debug("received DTO {}",matchDTO);
         Match match;
         MatchMapper matchMapper = new MatchMapper();
         try {
@@ -67,7 +67,7 @@ public class MatchWeb {
 
     @PutMapping("match")
     public ResponseEntity<Void> updateMatch(@RequestBody MatchDTO matchDTO){
-        log.debug("received DTO ",matchDTO);
+        log.debug("received DTO {}",matchDTO);
         Match match;
         MatchMapper matchMapper = new MatchMapper();
         try {
@@ -91,10 +91,15 @@ public class MatchWeb {
 
     @DeleteMapping("match/{id}")
     public ResponseEntity<Void> deleteMatch(@PathVariable(required = false) Long id){
-        log.debug("deleted DTO wth id :",id);
+        log.debug("deleted DTO wth id :{}",id);
 
-        matchService.deleteMatch(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        try {
+            matchService.deleteMatch(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            log.error(e.getMessage(),e);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
 
     }
 

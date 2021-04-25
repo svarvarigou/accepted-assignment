@@ -45,6 +45,10 @@ public class MatchService {
         return matchRepository.existsById(match.getId());
     }
 
+    public Boolean exists(Long matchId){
+        return matchRepository.existsById(matchId);
+    }
+
     public Iterable<Match> getMatchesBySport(SportsEnum sportsEnum){
         return matchRepository.findBySport(sportsEnum);
     }

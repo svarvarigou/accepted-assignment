@@ -46,7 +46,7 @@ public class MatchOddsTests {
         dummyMatchOdds = new MatchOdds();
         dummyMatchOdds.setMatch(dummyMatch);
         dummyMatchOdds.setOdd(1.5);
-        dummyMatchOdds.setSpecifier(SpecifierEnum.X);
+        dummyMatchOdds.setSpecifier(SpecifierEnum.X.getType());
     }
 
     @Test
