@@ -2,6 +2,7 @@ package com.varvarigou.accepted.assignment.models.jpa;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.varvarigou.accepted.assignment.enums.Sports;
 import lombok.*;
 
 import javax.persistence.*;
@@ -15,7 +16,8 @@ import java.util.Set;
                 @Index(name = "IDX_MATCH_ID", columnList = "id"),
                 @Index(name = "IDX_DATE", columnList = "match_date"),
                 @Index(name = "IDX_TEAMS", columnList = "team_a, team_b"),
-                @Index(name = "IDX_TEAMS_B", columnList = "team_b, team_a")
+                @Index(name = "IDX_TEAMS_A", columnList = "team_a"),
+                @Index(name = "IDX_TEAMS_B", columnList = "team_b")
         }
 )
 @Entity
@@ -42,11 +44,11 @@ public class Match implements Serializable {
     @Temporal(TemporalType.TIME)
     private Date match_time;
 
-    @Column(name="team_a", length=50)
+    @Column(name="team_a")
     private String team_a;
 
 
-    @Column(name="team_b", length=50)
+    @Column(name="team_b")
     private String team_b;
 
     @Column(name = "sport")
@@ -54,6 +56,6 @@ public class Match implements Serializable {
     private Sports sport;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "match")
+    @OneToMany(mappedBy = "match", cascade = CascadeType.ALL)
     private Set<MatchOdds> matchOdds;
 }

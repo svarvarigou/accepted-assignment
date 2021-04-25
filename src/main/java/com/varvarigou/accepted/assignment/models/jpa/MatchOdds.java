@@ -10,7 +10,6 @@ import java.io.Serializable;
 
 @Table(name = "match_odds",
         indexes = {
-                @Index(name = "IDX_MATCH_ID", columnList = "match_id"),
                 @Index(name = "IDX_SPECIFIER", columnList = "specifier")
         }
 )
@@ -26,8 +25,8 @@ public class MatchOdds implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "match_id",  insertable=false, updatable=false)
-    private Long match_id;
+/*    @Column(name = "match_id",  insertable=false, updatable=false)
+    private Long match_id;*/
 
     @Column(name="specifier", length=1)
     private String specifier;
