@@ -1,8 +1,11 @@
 package com.varvarigou.accepted.assignment;
 
+import com.varvarigou.accepted.assignment.enums.SpecifierEnum;
 import com.varvarigou.accepted.assignment.enums.SportsEnum;
 import com.varvarigou.accepted.assignment.models.jpa.Match;
-import com.varvarigou.accepted.assignment.repositories.MatchRepository;
+import com.varvarigou.accepted.assignment.models.jpa.MatchOdds;
+import com.varvarigou.accepted.assignment.repositories.MatchOddsRepository;
+import com.varvarigou.accepted.assignment.services.MatchOddsService;
 import com.varvarigou.accepted.assignment.services.MatchService;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeAll;
@@ -15,14 +18,18 @@ import java.util.Date;
 
 @SpringBootTest
 @ContextConfiguration
-public class MatchTests {
+public class MatchOddsTests {
 
     @Autowired
-    MatchRepository matchRepository;
+    MatchOddsRepository matchOddsRepository;
 
     @Autowired
     MatchService matchService;
 
+    @Autowired
+    MatchOddsService matchOddsService;
+
+    private static MatchOdds dummyMatchOdds;
     private static Match dummyMatch;
 
 
@@ -35,25 +42,20 @@ public class MatchTests {
         dummyMatch.setDescription("This is a dummy test match");
         dummyMatch.setTeam_a("AEK");
         dummyMatch.setTeam_b("PAO");
+
+        dummyMatchOdds = new MatchOdds();
+        dummyMatchOdds.setMatch(dummyMatch);
+        dummyMatchOdds.setOdd(1.5);
+        dummyMatchOdds.setSpecifier(SpecifierEnum.X);
     }
 
     @Test
-    public void saveMatch(){
+    public void saveMatchOdds(){
         Match savedMatch = matchService.saveMatch(dummyMatch);
-       Assert.assertEquals(savedMatch,dummyMatch);
-    }
 
-    @Test
-    public void updateMatch(){
-        Iterable<Match> savedMatches = matchService.getAllMatches(null);
-        for (Match savedMatch: savedMatches) {
-            if(savedMatch.getSport().equals(SportsEnum.FOOTBALL)){
-                savedMatch.setSportsValue(SportsEnum.BASKETBALL);
-                matchService.saveMatch(savedMatch);
-                Assert.assertEquals(matchService.getMatch(savedMatch.getId()).get().getSport(),SportsEnum.BASKETBALL);
-                break;
-            }
-        }
+        MatchOdds savedMatchOdds = matchOddsService.saveMatchOdds(dummyMatchOdds);
+
+        Assert.assertEquals(savedMatchOdds,dummyMatchOdds);
 
     }
 

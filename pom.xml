@@ -18,21 +18,27 @@
 		<sonar.projectKey>svarvarigou_accepted-assignment</sonar.projectKey>
 		<sonar.organization>svarvarigou</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+
+		<sonar.java.source>11</sonar.java.source>
+		<sonar.sources>src/main/java</sonar.sources>
+		<sonar.java.binaries>target/classes</sonar.java.binaries>
+		<sonar.sourceEncoding>UTF-8</sonar.sourceEncoding>
 		<sonar.exclusions>
 			**/generated/**/*,
-			**/model/**/*
+			**/models/**/*
 		</sonar.exclusions>
 		<sonar.test.exclusions>
 			src/test/**/*
 		</sonar.test.exclusions>
-		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
-		<sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
 		<sonar.coverage.exclusions>
 			**/generated/**/*,
-			**/model/**/*
+			**/models/**/*
 		</sonar.coverage.exclusions>
+		<sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+		<sonar.junit.reportsPath>target/surefire-reports/TEST-*.xml</sonar.junit.reportsPath>
+		<sonar.tests>src/test/java</sonar.tests>
+
 		<swagger.version>2.9.2</swagger.version>
-		<org.mapstruct.version>1.3.0.Final</org.mapstruct.version>
 	</properties>
 	<dependencies>
 
@@ -44,11 +50,10 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.mapstruct</groupId>
-			<artifactId>mapstruct-jdk8</artifactId>
-			<version>${org.mapstruct.version}</version>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-collections4</artifactId>
+			<version>4.1</version>
 		</dependency>
-
 
 		<dependency>
 			<groupId>io.springfox</groupId>
@@ -82,8 +87,8 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<optional>true</optional>
 		</dependency>
+
 
 		<!-- test -->
 		<dependency>
@@ -128,6 +133,28 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<configuration>
+				</configuration>
+				<executions>
+					<execution>
+						<id>default-prepare-agent</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>default-report</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
 		</plugins>
 	</build>
 

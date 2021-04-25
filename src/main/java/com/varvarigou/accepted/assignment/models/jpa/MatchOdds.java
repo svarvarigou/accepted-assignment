@@ -1,5 +1,6 @@
 package com.varvarigou.accepted.assignment.models.jpa;
 
+import com.varvarigou.accepted.assignment.enums.SpecifierEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,12 +29,13 @@ public class MatchOdds implements Serializable {
 /*    @Column(name = "match_id",  insertable=false, updatable=false)
     private Long match_id;*/
 
-    @Column(name="specifier", length=1)
-    private String specifier;
+    @Column(name="specifier", length = 1, nullable = false)
+    @Enumerated(EnumType.STRING)
+    private SpecifierEnum specifier;
 
-    @Column(name="odd")
+    @Column(name="odd", nullable = false)
     private Double odd;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Match match;
 }
