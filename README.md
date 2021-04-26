@@ -14,7 +14,7 @@ SwaggerUI is used and it is accessible in `/swagger-ui.html` **HOW EVER** please
 
 ### Unit Testing
 #### Test Creation and Coverage
-The application is approx *30%* covered by unit tests. These tests, even though they are not many, they have been created in order to focus on key parts of the application due to time pressure.  
+The application is approx *35%* covered by unit tests. These tests, even though they are not many, they have been created in order to focus on key parts of the application due to time pressure.  
 
 ## Code Quality
 The project is analyzed with SonarQube through a GitHub pipe on each commit. The project can be found here https://sonarcloud.io/dashboard?id=svarvarigou_accepted-assignment 
