@@ -90,4 +90,6 @@ public class Match implements Serializable {
     @OneToMany(mappedBy = "match", cascade = CascadeType.REMOVE)
     private Set<MatchOdds> matchOdds;
 
+    //testing something
+
 }
